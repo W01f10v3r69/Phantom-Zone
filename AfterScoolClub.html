@@ -1,0 +1,72 @@
+<html>
+
+<head>
+    <title>After School Club</title>
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <h1 v-text="sitename"></h1>
+        </header>
+
+        <main style="font-family: Arial, Helvetica, sans-serif; font-size: 20px;">
+            <section style="display: table;">
+                <figure style="float: left; ">
+                    <img v-bind:src="sub.image" alt="Image loading">
+                </figure>
+                <span style="float: left; margin-top: 30px;">
+                    <h1 v-text="sub.subject"></h1>
+                    <p> {{ sub.location }} </p>
+                    <p>Price: {{ sub.price }} </p>
+                    <p v-on:click='sub.space'>Number of spaces: {{spaceCount}}</p>
+                </span>
+            </section>
+            <button v-on:click='addToCart' v-if='canAddToCart'>Add to Cart</button>
+            <button disabled='disabled' v-else>Add to Cart</button>
+        </main>
+    </div>
+
+    <script type="text/javascript">
+        var school = new Vue({
+            el: '#app',
+            data: {
+                showSub:true,
+                store: [],
+                sitename: 'After School Club',
+                sub: {
+                    id:25,
+                    subject: "Math",
+                    location: "London",
+                    price: 100,
+                    space: 5,
+                    image: "images/calc1.png"
+                },
+                cart: []
+            },
+            methods: {
+                addToCart: function(){
+                    console.log('test');
+                    console.log(this.store);
+                    this.cart.push(this.sub.id);
+                },
+                showCheckout: function(){
+                    this.showSub = this.showSub ? false : true;
+                }
+            },
+            computed: {
+                spaceCount: function () {
+                    return this.cart.length || '';
+                },
+                canAddToCart: function () {
+                    return this.sub.space > this.spaceCount;
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>
